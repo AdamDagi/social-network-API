@@ -2,38 +2,32 @@ const router = require('express').Router();
 const { User, Thought } = require('../../models');
 
 // find All Users
-router.get('', (req, res) => {
-    User.findAll({
-        include: [
-            { model: Thought }
-        ]
-    }).then(userData => {
-        res.json(userData);
-    });
+router.get('/', (req, res) => {
+    const users = User.find({});
+    console.log(users);
+    if(users) {
+        res.end(users.toObject());
+    } else {
+        res.end("No Data");
+    };
 });
 
 // find One User
 router.get('', (req, res) => {
-    User.findOne({
-        include: [
-            { model: Thought }
-        ],
-        where: {
-            id: req.params.id
-        }
-    }).then(userData => {
-        res.json(userData);
-    });
+    // const users = await User.findOne({});
+    // if(users) {
+    //     res.end(users);
+    // } else {
+    //     res.end("No Data");
+    // };
 });
 
 // create new User
-router.post('', (req, res) => {
-    User.create(req.body)
-    .then((user) => res.status(200).json(user))
-    .catch((err) => {
-        console.log(err);
-        res.status(400).json(err);
-    });
+router.post('/', (req, res) => {
+    const dataUser = req.body;
+    const user = new User(dataUser);
+    user.save();
+    res.end("ok");
 });
 
 // update User

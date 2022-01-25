@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Shema } = mongoose;
+const { Schema } = mongoose;
 
 const validateEmail = (email) => {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
