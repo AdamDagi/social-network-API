@@ -2,26 +2,24 @@ const mongoose = require('mongoose');
 const { Shema } = mongoose;
 
 const reaction = new Schema({
+    reactionId: {
+        type: mongoose.ObjectId,
+        default: mongoose.set
+    },
+    reactionBody: {
+        type: String,
+        require: true,
+        maxLength: 280,
+    },
     username: {
         type: String,
-        unique: true,
         require: true,
-        triemed: true,
     },
-    email: {
-        type: String,
-        unique: true,
-        require: true,
-        validate: [validateEmail, 'Please fill a valid email address'],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
     },
-    thoughts: [{ 
-        type: Schema.Types.ObjectId, 
-        ref: 'Thought',
-    }],
-    friends: [{ 
-        type: Schema.Types.ObjectId, 
-        ref: 'User',
-    }]
 });
 
 module.exports = mongoose.model('Reaction', reaction);

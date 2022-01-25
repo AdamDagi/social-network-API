@@ -28,7 +28,7 @@ const user = new Schema({
     friends: [{ 
         type: Schema.Types.ObjectId, 
         ref: 'User',
-    }]
+    }],
 });
 
 module.exports = mongoose.model('User', user);
