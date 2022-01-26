@@ -2,24 +2,26 @@ const router = require('express').Router();
 const { User, Thought } = require('../../models');
 
 // find All Users
-router.get('/', (req, res) => {
-    const users = User.find({});
-    console.log(users);
+router.get('/', async (req, res) => {
+    const users = await User.find();
     if(users) {
-        res.end(users.toObject());
+        res.json(users);
     } else {
         res.end("No Data");
     };
 });
 
 // find One User
-router.get('', (req, res) => {
-    // const users = await User.findOne({});
-    // if(users) {
-    //     res.end(users);
-    // } else {
-    //     res.end("No Data");
-    // };
+router.get('/:id', async (req, res) => {
+    const id = req.params.id;
+    const user = await User.findOne({
+        id: id,
+    });
+    if(users) {
+        res.json(user);
+    } else {
+        res.end("No Data");
+    };
 });
 
 // create new User
@@ -27,40 +29,33 @@ router.post('/', (req, res) => {
     const dataUser = req.body;
     const user = new User(dataUser);
     user.save();
-    res.end("ok");
+    res.json(user);
 });
 
 // update User
-router.put('', (req, res) => {
-    User.update(
-        {
-            id: req.body.id
-        },
-        {
-            where: {
-                id: req.params.id,
-            },
-        }
-    )
-    .then((updateUser) => {
-        res.json(updateUser);
-    })
-    .catch((err) => {
-        res.status(400).json(err);
-    });
+router.put('/:id', async (req, res) => {
+    const id = req.params.id;
+    const user = await User.updateOne(
+        { _id: id },
+        req.body,
+    );
+    if(user) {
+        res.json(user);
+    } else {
+        res.end("No Data");
+    };
 });
 
 // delete User
-router.delete('', (req, res) => {
-    User.destroy({
-        where: {
-            id: req.params.id,
-        },
-    })
-    .then((deleteUser) => {
-        res.json(deleteUser);
-    })
-    .catch((err) => res.json(err));
+router.delete('/:id', async (req, res) => {
+    const user = await User.remove({
+        _id: req.params.id
+    });
+    if(user) {
+        res.json(user);
+    } else {
+        res.end("No Data");
+    };
 });
 
 module.exports = router;
