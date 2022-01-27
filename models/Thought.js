@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const thought = new Schema({
     thoughtText: {
         type: String,
-        require: true,
+        required: true,
         triemed: true,
         maxLength: 280,
     },
@@ -15,11 +15,12 @@ const thought = new Schema({
     },
     username: {
         type: String,
-        require: true,
+        required: true,
     },
-    // reactions: [{ 
-    //     ref: 'Reaction',
-    // }]
+    reactions: [{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'Reaction',
+    }],
 });
 
 module.exports = mongoose.model('Thought', thought);

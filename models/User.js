@@ -12,13 +12,13 @@ const user = new Schema({
     username: {
         type: String,
         unique: true,
-        require: true,
+        required: true,
         triemed: true,
     },
     email: {
         type: String,
         unique: true,
-        require: true,
+        required: true,
         validate: [validateEmail, 'Please fill a valid email address'],
     },
     thoughts: [{ 

@@ -13,7 +13,7 @@ app.use(routes);
 
 // app.use(routes);
 async function start() {
-    await mongoose.connect(`mongodb+srv://AdamDagi:${Password}@cluster0.j80q4.mongodb.net/socialNetworkApi?retryWrites=true&w=majority`)
+    await mongoose.connect(`mongodb+srv://AdamDagi:${process.env.Password}@cluster0.j80q4.mongodb.net/socialNetworkApi?retryWrites=true&w=majority`)
     app.listen(PORT, () => console.log('Now listening'));
 }
 

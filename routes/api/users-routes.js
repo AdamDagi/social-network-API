@@ -58,4 +58,17 @@ router.delete('/:id', async (req, res) => {
     };
 });
 
+// User.pre('deleteOne', function (next) {
+//     const userId = this.getQuery()["_id"];
+//     mongoose.model("Thought").deleteMany({'user': userId}, function (err, result) {
+//       if (err) {
+//         console.log(`[error] ${err}`);
+//         next(err);
+//       } else {
+//         console.log('success');
+//         next();
+//       }
+//     });
+// });
+
 module.exports = router;
