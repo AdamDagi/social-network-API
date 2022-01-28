@@ -4,8 +4,13 @@ const { User, Thought } = require('../../models');
 // find All Users
 router.get('/', async (req, res) => {
     const users = await User.find();
+    const result = [];
+    users.forEach((item) => {
+        const friendCount = item.friendCount;
+        result.push({item, friendCount});
+    });
     if(users) {
-        res.json(users);
+        res.json(result);
     } else {
         res.end("No Data");
     };
@@ -17,7 +22,7 @@ router.get('/:id', async (req, res) => {
     const user = await User.findOne({
         id: id,
     });
-    if(users) {
+    if(user) {
         res.json(user);
     } else {
         res.end("No Data");
@@ -58,17 +63,22 @@ router.delete('/:id', async (req, res) => {
     };
 });
 
-// User.pre('deleteOne', function (next) {
-//     const userId = this.getQuery()["_id"];
-//     mongoose.model("Thought").deleteMany({'user': userId}, function (err, result) {
-//       if (err) {
-//         console.log(`[error] ${err}`);
-//         next(err);
-//       } else {
-//         console.log('success');
-//         next();
-//       }
-//     });
-// });
+// create new Friend
+router.post('/:userId/friends/:friendId', async (req, res) => {
+    const user = await User.updateOne(
+        { _id: req.params.userId },
+        { $push: { friends: req.params.friendId } }
+    );
+    res.json(user);
+});
+
+// delete Friend
+router.delete('/:userId/friends/:friendId', async (req, res) => {
+    const user = await User.updateOne(
+        { _id: req.params.userId },
+        { $pull: { friends: req.params.friendId } }
+    );
+    res.json(user);
+});
 
 module.exports = router;

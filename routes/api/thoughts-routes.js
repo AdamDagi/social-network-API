@@ -4,8 +4,13 @@ const { Thought, User, Reaction } = require('../../models');
 // find All Thoughts
 router.get('/', async (req, res) => {
     const thoughts = await Thought.find();
+    const result = [];
+    thoughts.forEach((item) => {
+        const reactionCount = item.reactionCount;
+        result.push({item, reactionCount});
+    });
     if(thoughts) {
-        res.json(thoughts);
+        res.json(result);
     } else {
         res.end("No Data");
     };

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { User } = require('.');
 const { Schema } = mongoose;
 
 const validateEmail = (email) => {
@@ -29,6 +30,10 @@ const user = new Schema({
         type: Schema.Types.ObjectId, 
         ref: 'User',
     }],
+});
+
+user.virtual('friendCount').get(function() {
+    return this.friends.length;
 });
 
 module.exports = mongoose.model('User', user);
