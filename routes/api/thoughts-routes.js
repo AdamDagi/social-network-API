@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Thought, User, Reaction } = require('../../models');
+const { findOne } = require('../../models/User');
 
 // find All Thoughts
 router.get('/', async (req, res) => {
@@ -74,27 +75,26 @@ router.delete('/:id', async (req, res) => {
 
 // create new Reaction
 router.post('/:thoughtId/reactions', async (req, res) => {
-    const reaction = new Reaction(req.body);
-    reaction.save();
     const thoughtId = req.params.thoughtId;
-    await Thought.updateOne(
+    const thought = await Thought.updateOne(
         { _id: thoughtId },
-        { $push: { reactions: reaction.reactionId } }
+        { $push: { reactions: req.body } }
     );
-    res.json(reaction);
+    res.json(thought);
 });
 
 // delete Reaction
 router.delete('/:thoughtId/reactions/:reactionId', async (req, res) => {
     const thoughtId = req.params.thoughtId;
-    await Thought.updateOne(
-        { _id: thoughtId },
-        { $pull: { reactions: req.params.reactionId } }
-    );
-    const reaction = await Reaction.remove({
-        reactionId: req.params.reactionId
+    const thought = await Thought.findOne({
+        _id: thoughtId
     });
-    res.json(reaction);
+    const filteredReactions = thought.reactions.filter((reaction) => req.params.reactionId!==reaction.reactionId.toString());
+    const delThought = await Thought.updateOne(
+        { _id: thoughtId },
+        { reactions: filteredReactions }
+    );
+    res.json(delThought);
 });
 
 module.exports = router;

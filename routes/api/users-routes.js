@@ -53,8 +53,18 @@ router.put('/:id', async (req, res) => {
 
 // delete User
 router.delete('/:id', async (req, res) => {
+    const id = req.params.id;
+    const delUser = await User.findOne({
+        _id: id,
+    });
+    const thoughtsId = delUser.thoughts;
+    thoughtsId.forEach( async (thoId) => {
+        const delThought  = await Thought.remove({
+            _id: thoId 
+        });
+    });
     const user = await User.remove({
-        _id: req.params.id
+        _id: id
     });
     if(user) {
         res.json(user);
