@@ -23,5 +23,5 @@
 <img width="1352" alt="Screen Shot 2022-02-01 at 7 33 56 PM" src="https://user-images.githubusercontent.com/90221273/152074455-1df03c20-3cbb-49d1-b32e-7074bc6a413c.png">
 
 ## Links
-* GitHub Repo Link: https://github.com/AdamDagi/social-network-API
-* Walkthrough Video: https://watch.screencastify.com/v/uJvMPkNlKfW4yojOyJsI
+* [GitHub Repository](https://github.com/AdamDagi/social-network-API)
+* [Walkthrough Video](https://watch.screencastify.com/v/uJvMPkNlKfW4yojOyJsI)
